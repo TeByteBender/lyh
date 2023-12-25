@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.homemanagementsystem.mapper.GoodsMapper">
+
+    <!-- 查询所有商品信息 -->
+    <select id="getAllGoods" resultType="com.example.homemanagementsystem.pojo.Goods">
+        select
+            g.id,
+            k.name,
+            g.good_name,
+            g.price,
+            g.image
+        from goods g
+            left join kinds k on k.id = g.kinds_id
+    </select>
+
+    <!-- 批量删除商品 -->
+    <delete id="deleteGoods">
+        delete
+        from goods
+        where id in
+            <foreach collection="ids" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+    </delete>
+</mapper>
